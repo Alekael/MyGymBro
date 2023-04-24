@@ -9,7 +9,7 @@ import dadm.alsadel.mygymbro.databinding.FragmentStepOneBinding
 class StepTwoFragment : Fragment(R.layout.fragment_step_two) {
 
     private var _binding : FragmentStepOneBinding? = null
-    private val binding get() = _binding
+    private val binding get() = _binding!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
