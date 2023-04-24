@@ -5,6 +5,9 @@
     <color name="primary_700">#0056F1</color>
     <color name="secondary_200">#F3F7FF</color>
     <color name="secondary_700">#79A2D8</color>
+    <color name="teritiary">#F3F7FF</color>
+    <color name="error">#1A2151</color>
+    <color name="info">#E3E8FF</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="light_gray">#D7D7D7</color>

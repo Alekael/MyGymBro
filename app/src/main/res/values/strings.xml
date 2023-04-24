@@ -6,6 +6,9 @@
     <string name="height">Height</string>
     <string name="step1">Step 1</string>
     <string name="step2">Step 2</string>
+    <string name="female">Female</string>
+    <string name="male">Male</string>
+    <string name="gender_explication">To give you a customize experience we need to know your gender</string>
     <string name="application_logo">Application\'s logo</string>
     <string name="welcome_to_mygymbro">Welcome to MyGymBro</string>
     <string name="password">Password</string>
