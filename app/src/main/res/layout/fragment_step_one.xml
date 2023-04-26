@@ -32,7 +32,7 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:hint="@string/nickname"
-        app:layout_constraintBottom_toBottomOf="@id/age"
+        app:layout_constraintBottom_toTopOf="@id/age"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/guideline2"
@@ -50,7 +50,7 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:hint="@string/age"
-        app:layout_constraintBottom_toBottomOf="@id/weight"
+        app:layout_constraintBottom_toTopOf="@id/weight"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/nickName"
@@ -59,7 +59,12 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/textAge"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/weight"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/nickName"
+            />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -68,7 +73,7 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:hint="@string/weight"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/height"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/age"
@@ -86,7 +91,7 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:hint="@string/height"
-        app:layout_constraintBottom_toBottomOf="@id/guideline3"
+        app:layout_constraintBottom_toTopOf="@id/guideline3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/weight"
@@ -134,14 +139,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_end="531dp" />
+        app:layout_constraintGuide_end="512dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="540dp" />
+        app:layout_constraintGuide_begin="458dp" />
 
 
 

@@ -15,6 +15,7 @@ class StepOneFragment : Fragment(R.layout.fragment_step_one) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentStepOneBinding.bind(view)
+
         binding.btcontinue.setOnClickListener{
             navigateToStepTwo()
         }
@@ -26,7 +27,7 @@ class StepOneFragment : Fragment(R.layout.fragment_step_one) {
     }
 
     private fun navigateToStepTwo(){
-        findNavController().navigate(R.id.toStepTwo)
+        findNavController().navigate(R.id.stepTwoFragment)
     }
 
 }
