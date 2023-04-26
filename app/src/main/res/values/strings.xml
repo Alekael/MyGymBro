@@ -6,4 +6,19 @@
     <string name="height">Height</string>
     <string name="step1">Step 1</string>
     <string name="step2">Step 2</string>
+    <string name="step5">Step 5/5</string>
+    <string name="schedule">Tell us your schedule.</string>
+    <string name="M">M</string>
+    <string name="T">T</string>
+    <string name="W">W</string>
+    <string name="Th">T</string>
+    <string name="F">F</string>
+    <string name="Sa">S</string>
+    <string name="Sun">S</string>
+    <string name="ses_time">Session time(min)</string>
+    <string name="fin_schedule">To finish with your personalized program we need your schedule.</string>
+    <string name="back">BACK</string>
+    <string name="finish">FINISH</string>
+    <string name="MGB">MyGymBro</string>
+
 </resources>
