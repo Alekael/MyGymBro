@@ -5,16 +5,47 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/MGB"
-        android:textSize="48sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.547" />
+    <RelativeLayout
+        android:id="@+id/splash"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/splash"
+        android:clipToOutline="true"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
+
+        <TextView
+            android:id="@+id/mygymbro"
+            android:layout_width="173dp"
+            android:layout_height="49dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="119dp"
+            android:layout_marginTop="419dp"
+            android:layout_marginEnd="119dp"
+            android:layout_marginBottom="262dp"
+            android:gravity="top"
+            android:text="@string/mygymbro"
+            android:textAppearance="@style/mygymbro" />
+
+        <View
+            android:id="@+id/icon"
+            android:layout_width="112.37dp"
+            android:layout_height="86dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="150dp"
+            android:layout_marginLeft="150dp"
+            android:layout_marginTop="319dp"
+            android:layout_marginEnd="149dp"
+            android:layout_marginBottom="326dp"
+            android:background="@drawable/icon_white" />
+
+    </RelativeLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
