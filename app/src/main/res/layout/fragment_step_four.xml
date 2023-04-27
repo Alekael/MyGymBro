@@ -31,7 +31,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline4" />
 
-
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/materialCardView1"
         android:layout_width="0dp"
@@ -57,7 +56,8 @@
                 android:id="@+id/radioButtonWeightLoss"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:buttonTint="@color/primary_700" />
 
             <TextView
                 android:layout_width="220dp"
@@ -101,7 +101,8 @@
                 android:id="@+id/radioButtonImprove"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:buttonTint="@color/primary_700"/>
 
             <TextView
                 android:layout_width="220dp"
@@ -145,7 +146,8 @@
                 android:id="@+id/radioButtonDefine"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:buttonTint="@color/primary_700"/>
 
             <TextView
                 android:layout_width="220dp"
@@ -225,7 +227,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="612dp" />
+        app:layout_constraintGuide_begin="572dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline9"

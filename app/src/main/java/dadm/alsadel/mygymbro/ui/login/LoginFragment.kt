@@ -24,7 +24,7 @@ class LoginFragment : Fragment(R.layout.fragment_login){
         }
 
         binding.optionToRegister.setOnClickListener(){
-            findNavController().navigate(R.id.stepOneFragment)
+            findNavController().navigate(R.id.registerFragment)
         }
     }
 
