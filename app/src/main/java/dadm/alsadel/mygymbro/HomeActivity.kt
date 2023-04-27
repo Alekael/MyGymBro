@@ -12,8 +12,8 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val navController = binding.navHostFragment.getFragment<NavHostFragment>().navController
 
+        val navController = binding.navHostFragment.getFragment<NavHostFragment>().navController
         navController.navigate(R.id.homeFragment)
 
         // Setup bottom navigation
