@@ -1,8 +1,11 @@
 package dadm.alsadel.mygymbro.ui.login
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import dadm.alsadel.mygymbro.HomeActivity
 import dadm.alsadel.mygymbro.R
 import dadm.alsadel.mygymbro.databinding.FragmentLoginBinding
 
@@ -14,6 +17,15 @@ class LoginFragment : Fragment(R.layout.fragment_login){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentLoginBinding.bind(view)
+
+        binding.login.setOnClickListener(){
+            val intent = Intent(activity, HomeActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.optionToRegister.setOnClickListener(){
+            findNavController().navigate(R.id.registerFragment)
+        }
     }
 
     override fun onDestroyView() {

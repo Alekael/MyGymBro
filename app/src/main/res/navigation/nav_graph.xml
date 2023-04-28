@@ -3,27 +3,56 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/mainActivity">
+    app:startDestination="@id/loginFragment">
 
     <activity
         android:id="@+id/mainActivity"
         android:name="dadm.alsadel.mygymbro.MainActivity"
         android:label="activity_main"
         tools:layout="@layout/activity_main" />
+
+    <activity
+        android:id="@+id/homeActivity"
+        android:name="dadm.alsadel.mygymbro.HomeActivity"
+        android:label="activity_home"
+        tools:layout="@layout/activity_home" />
+
     <fragment
         android:id="@+id/stepOneFragment"
         android:name="dadm.alsadel.mygymbro.ui.onboarding.StepOneFragment"
-        android:label="StepOneFragment" >
-        <action
-            android:id="@+id/toStepTwo"
-            app:destination="@id/stepTwoFragment" />
-    </fragment>
+        android:label="StepOneFragment" />
     <fragment
         android:id="@+id/stepTwoFragment"
         android:name="dadm.alsadel.mygymbro.ui.onboarding.StepTwoFragment"
-        android:label="StepTwoFragment" >
-        <action
-            android:id="@+id/toStepOne"
-            app:destination="@id/stepOneFragment" />
-    </fragment>
+        android:label="StepTwoFragment" />
+    <fragment
+        android:id="@+id/stepThreeFragment"
+        android:name="dadm.alsadel.mygymbro.ui.onboarding.StepThreeFragment"
+        android:label="StepThreeFragment" />
+    <fragment
+        android:id="@+id/stepFourFragment"
+        android:name="dadm.alsadel.mygymbro.ui.onboarding.StepFourFragment"
+        android:label="StepFourFragment" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="dadm.alsadel.mygymbro.ui.login.LoginFragment"
+        android:label="LoginFragment" />
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="dadm.alsadel.mygymbro.ui.register.RegisterFragment"
+        android:label="RegisterFragment" />
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="dadm.alsadel.mygymbro.ui.home.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="dadm.alsadel.mygymbro.ui.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/stepFiveFragment"
+        android:name="dadm.alsadel.mygymbro.ui.onboarding.StepFiveFragment"
+        android:label="StepFiveFragment" />
 </navigation>

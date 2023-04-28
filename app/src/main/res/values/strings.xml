@@ -23,7 +23,7 @@
 
     <string name="female">Female</string>
     <string name="male">Male</string>
-    <string name="gender_explication">To give you a customize experience we need to know your gender</string>
+    <string name="gender_explication">To give you a customize experience \n we need to know your gender</string>
     <string name="application_logo">Application\'s logo</string>
     <string name="welcome_to_mygymbro">Welcome to MyGymBro</string>
     <string name="password">Password</string>
@@ -34,4 +34,6 @@
     <string name="confirm_your_password">Confirm your password</string>
     <string name="already_have_an_account_login">Already have an account? Login</string>
     <string name="register_button">Register</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

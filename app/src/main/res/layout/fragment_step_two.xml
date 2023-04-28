@@ -27,65 +27,40 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline4" />
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/female"
+
+
+        <Button
+            android:id="@+id/btnFemale"
+            app:cornerRadius="20dp"
+            android:layout_width="150dp"
+            android:layout_height="200dp"
+            android:backgroundTint="@color/primary_200"
+            android:text="Female"
+            android:textColor="@color/primary_700"
+            app:layout_constraintBottom_toTopOf="@+id/guideline7"
+            app:layout_constraintEnd_toStartOf="@id/btnMale"
+            app:layout_constraintHorizontal_bias="0.172"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline6"
+            ></Button>
+
+
+    <Button
+        android:id="@+id/btnMale"
         android:layout_width="150dp"
         android:layout_height="200dp"
-        app:cardCornerRadius="15dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline7"
-        app:layout_constraintEnd_toStartOf="@id/male"
-        app:layout_constraintHorizontal_bias="0.172"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline6">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tfemale"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Female"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/male"
-        android:layout_width="150dp"
-        android:layout_height="200dp"
-        android:background="@color/teritiary"
-        app:cardCornerRadius="15dp"
+        android:backgroundTint="@color/primary_200"
+        android:text="Male"
+        android:textColor="@color/primary_700"
+        app:cornerRadius="20dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline7"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.938"
-        app:layout_constraintStart_toEndOf="@+id/female"
-        app:layout_constraintTop_toTopOf="@+id/guideline6">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tmale"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Male"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </com.google.android.material.card.MaterialCardView>
+        app:layout_constraintHorizontal_bias="0.172"
+        app:layout_constraintStart_toEndOf="@id/btnFemale"
+        app:layout_constraintTop_toTopOf="@+id/guideline6"></Button>
 
     <TextView
-        android:id="@+id/tgender"
-        android:layout_width="300dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/gender_explication"
         android:textAlignment="center"

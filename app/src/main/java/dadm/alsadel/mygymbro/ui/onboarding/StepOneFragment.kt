@@ -15,18 +15,19 @@ class StepOneFragment : Fragment(R.layout.fragment_step_one) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentStepOneBinding.bind(view)
+
         binding.btcontinue.setOnClickListener{
-            navigateToStepTwo()
+            findNavController().navigate(R.id.stepTwoFragment)
+        }
+
+        binding.btback.setOnClickListener(){
+            findNavController().navigate(R.id.loginFragment)
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    private fun navigateToStepTwo(){
-        findNavController().navigate(R.id.toStepTwo)
     }
 
 }
