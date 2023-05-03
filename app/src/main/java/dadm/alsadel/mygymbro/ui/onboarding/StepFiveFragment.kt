@@ -42,7 +42,10 @@ class StepFiveFragment : Fragment(R.layout.fragment_step_five) {
             if (binding.checkBoxSunday.isChecked()){
             days  += "Sunday; "
         }
+
+
             if(days == "" || duration == null){
+                days = ""
                 Snackbar.make(binding.root, R.string.snackStepFive, Snackbar.LENGTH_SHORT).show()
 
             }else {

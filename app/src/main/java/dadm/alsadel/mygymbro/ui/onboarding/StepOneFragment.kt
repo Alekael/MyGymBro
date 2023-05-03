@@ -13,9 +13,9 @@ class StepOneFragment : Fragment(R.layout.fragment_step_one) {
     private var _binding : FragmentStepOneBinding? = null
     private val binding get() = _binding!!
     var textNickName : String? = null
-    var textAge : Int? = null
-    var textWeight : Int? = null
-    var textHeight : Int? = null
+    var textAge : Int = 0
+    var textWeight : Int = 0
+    var textHeight : Int = 0
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentStepOneBinding.bind(view)
@@ -27,7 +27,7 @@ class StepOneFragment : Fragment(R.layout.fragment_step_one) {
             textWeight  = binding.textWeight.text.toString().toInt()
             textHeight  = binding.textHeight.text.toString().toInt()
 
-            if(textNickName == "" || textAge == null || textWeight == null|| textHeight == null) {
+            if(textNickName == "" || textAge > 0 || textWeight > 0 || textHeight > 0) {
                 Snackbar.make(binding.root, R.string.snackStepOne, Snackbar.LENGTH_SHORT).show()
 
             }
