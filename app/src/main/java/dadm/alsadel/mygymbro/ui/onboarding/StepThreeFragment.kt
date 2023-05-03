@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import dadm.alsadel.mygymbro.R
 import dadm.alsadel.mygymbro.databinding.FragmentStepThreeBinding
 
@@ -11,13 +12,25 @@ class StepThreeFragment : Fragment(R.layout.fragment_step_three){
 
     private var _binding : FragmentStepThreeBinding? = null
     private val binding get() = _binding!!
+    var level : String? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentStepThreeBinding.bind(view)
 
         binding.btnContinue.setOnClickListener{
-            findNavController().navigate(R.id.stepFourFragment)
+            if (binding.radioButtonAdvanced.isChecked()){
+                level  = "Advanced"
+                findNavController().navigate(R.id.stepFourFragment)
+            }else if(binding.radioButtonBeginner.isChecked()){
+                level  = "Beginner"
+                findNavController().navigate(R.id.stepFourFragment)
+            }else if (binding.radioButtonIntermediate.isChecked()){
+                level = "Intermediate"
+                findNavController().navigate(R.id.stepFourFragment)
+            } else{
+                Snackbar.make(binding.root, R.string.snackSelectOption, Snackbar.LENGTH_SHORT).show()
+            }
         }
 
         binding.btback.setOnClickListener(){
