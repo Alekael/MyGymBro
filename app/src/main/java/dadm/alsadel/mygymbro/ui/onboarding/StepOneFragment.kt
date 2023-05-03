@@ -11,12 +11,13 @@ class StepOneFragment : Fragment(R.layout.fragment_step_one) {
 
     private var _binding : FragmentStepOneBinding? = null
     private val binding get() = _binding!!
-
+    var textNickName : String? = null
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentStepOneBinding.bind(view)
 
         binding.btcontinue.setOnClickListener{
+            textNickName = binding.textNickName.text.toString()
             findNavController().navigate(R.id.stepTwoFragment)
         }
 
