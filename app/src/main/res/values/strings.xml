@@ -36,4 +36,7 @@
     <string name="register_button">Register</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="snackDifferentPassword">The passwords doesn\'t match</string>
+    <string name="snackEmptyFields">Some fields remain empty</string>
+    <string name="snackSelectOption">Select an option</string>
 </resources>
