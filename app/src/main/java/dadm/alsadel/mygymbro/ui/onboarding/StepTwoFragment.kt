@@ -8,12 +8,16 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import dadm.alsadel.mygymbro.R
 import dadm.alsadel.mygymbro.databinding.FragmentStepTwoBinding
+import dadm.alsadel.mygymbro.ui.onboarding.StepTwoFragment.StepTwoCompanion.gender
 
 class StepTwoFragment : Fragment(R.layout.fragment_step_two) {
 
     private var _binding : FragmentStepTwoBinding? = null
     private val binding get() = _binding!!
-    var gender : String? = ""
+
+    object StepTwoCompanion{
+        var gender : String? = ""
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -22,7 +26,7 @@ class StepTwoFragment : Fragment(R.layout.fragment_step_two) {
         binding.btnMale.setOnClickListener(){
             binding.btnFemale.setBackgroundColor(Color.WHITE)
             binding.btnFemale.setTextColor(Color.argb(1, 0, 86, 241))
-             gender = "Male"
+            gender = "Male"
             binding.btnMale.setBackgroundColor(Color.argb(1, 0, 86, 241))
             binding.btnMale.setTextColor(Color.WHITE)
 

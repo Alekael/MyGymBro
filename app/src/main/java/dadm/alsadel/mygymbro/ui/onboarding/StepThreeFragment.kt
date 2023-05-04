@@ -7,12 +7,16 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import dadm.alsadel.mygymbro.R
 import dadm.alsadel.mygymbro.databinding.FragmentStepThreeBinding
+import dadm.alsadel.mygymbro.ui.onboarding.StepThreeFragment.StepThreeCompanion.level
 
 class StepThreeFragment : Fragment(R.layout.fragment_step_three){
 
     private var _binding : FragmentStepThreeBinding? = null
     private val binding get() = _binding!!
-    var level : String? = null
+    object StepThreeCompanion{
+        var level : String = ""
+
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

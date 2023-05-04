@@ -10,14 +10,21 @@ import com.google.android.material.snackbar.Snackbar
 import dadm.alsadel.mygymbro.R
 import dadm.alsadel.mygymbro.data.Users
 import dadm.alsadel.mygymbro.databinding.FragmentRegisterBinding
+import dadm.alsadel.mygymbro.ui.register.RegisterFragment.RegisterFragmentCompanion.confirmPassword
+import dadm.alsadel.mygymbro.ui.register.RegisterFragment.RegisterFragmentCompanion.email
+import dadm.alsadel.mygymbro.ui.register.RegisterFragment.RegisterFragmentCompanion.password
 
 class RegisterFragment : Fragment(R.layout.fragment_register) {
 
+    object RegisterFragmentCompanion {
+        var email : String = ""
+        var password : String = ""
+        var confirmPassword : String = ""
+    }
+
     private var _binding : FragmentRegisterBinding? = null
     private val binding get() = _binding!!
-    var email : String? = null
-    var password : String? = null
-    var confirmPassword : String? = null
+
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -28,7 +35,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
              email = binding.textEmail.text.toString()
              password = binding.textPassword.text.toString()
              confirmPassword = binding.textConfirmPassword.text.toString()
-            if ( !email!!.isEmpty() && !password!!.isEmpty() && !confirmPassword!!.isEmpty()) {
+            if ( !email.isEmpty() && !password.isEmpty() && !confirmPassword.isEmpty()) {
                 if (!password.equals(confirmPassword)) {
                     Snackbar.make(
                         binding.root,
@@ -57,4 +64,5 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
         super.onDestroyView()
         _binding = null
     }
+
 }

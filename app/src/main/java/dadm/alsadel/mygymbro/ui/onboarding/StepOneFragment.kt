@@ -7,15 +7,23 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import dadm.alsadel.mygymbro.R
 import dadm.alsadel.mygymbro.databinding.FragmentStepOneBinding
+import dadm.alsadel.mygymbro.ui.onboarding.StepOneFragment.StepOneCompanion.textAge
+import dadm.alsadel.mygymbro.ui.onboarding.StepOneFragment.StepOneCompanion.textHeight
+import dadm.alsadel.mygymbro.ui.onboarding.StepOneFragment.StepOneCompanion.textNickName
+import dadm.alsadel.mygymbro.ui.onboarding.StepOneFragment.StepOneCompanion.textWeight
 
 class StepOneFragment : Fragment(R.layout.fragment_step_one) {
 
     private var _binding : FragmentStepOneBinding? = null
     private val binding get() = _binding!!
-    var textNickName : String? = null
-    var textAge : Int = 0
-    var textWeight : Int = 0
-    var textHeight : Int = 0
+
+
+    object StepOneCompanion{
+        var textNickName : String = ""
+        var textAge : Double = 0.0
+        var textWeight : Double = 0.0
+        var textHeight : Double = 0.0
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentStepOneBinding.bind(view)
@@ -23,11 +31,11 @@ class StepOneFragment : Fragment(R.layout.fragment_step_one) {
         binding.btcontinue.setOnClickListener{
 
             textNickName = binding.textNickName.text.toString()
-            textAge = binding.textAge.text.toString().toInt()
-            textWeight  = binding.textWeight.text.toString().toInt()
-            textHeight  = binding.textHeight.text.toString().toInt()
+            textAge = binding.textAge.text.toString().toDouble()
+            textWeight  = binding.textWeight.text.toString().toDouble()
+            textHeight  = binding.textHeight.text.toString().toDouble()
 
-            if(textNickName == "" || textAge > 0 || textWeight > 0 || textHeight > 0) {
+            if(textNickName == "" || textAge < 0.0 || textWeight < 0.0|| textHeight < 0.0) {
                 Snackbar.make(binding.root, R.string.snackStepOne, Snackbar.LENGTH_SHORT).show()
 
             }
