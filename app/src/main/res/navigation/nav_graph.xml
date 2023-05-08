@@ -55,4 +55,9 @@
         android:id="@+id/stepFiveFragment"
         android:name="dadm.alsadel.mygymbro.ui.onboarding.StepFiveFragment"
         android:label="StepFiveFragment" />
+    <fragment
+        android:id="@+id/sessionFragment"
+        android:name="dadm.alsadel.mygymbro.ui.session.SessionFragment"
+        android:label="fragment_session"
+        tools:layout="@layout/fragment_session" />
 </navigation>
