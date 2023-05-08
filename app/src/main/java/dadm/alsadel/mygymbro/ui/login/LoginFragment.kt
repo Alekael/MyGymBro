@@ -14,7 +14,7 @@ class LoginFragment : Fragment(R.layout.fragment_login){
 
     private var _binding : FragmentLoginBinding? = null
     private val binding get() = _binding!!
-    private val viewModel : LoginViewModel by viewModels()
+//    private val viewModel : LoginViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -22,7 +22,7 @@ class LoginFragment : Fragment(R.layout.fragment_login){
 
         binding.login.setOnClickListener(){
 
-            viewModel.loginUser(binding.email.toString(),binding.password.toString())
+//            viewModel.loginUser(binding.email.toString(),binding.password.toString())
             val intent = Intent(activity, HomeActivity::class.java)
             startActivity(intent)
         }
