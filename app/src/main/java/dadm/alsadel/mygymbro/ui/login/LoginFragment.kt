@@ -29,20 +29,27 @@ class LoginFragment : Fragment(R.layout.fragment_login){
 
         binding.login.setOnClickListener(){
 
-            viewModel.loginUser(binding.textEmail.text.toString(),binding.textPassword.text.toString())
+            if(!binding.textEmail.text.toString().isNullOrEmpty() and !binding.textPassword.text.toString().isNullOrEmpty()){
 
-            viewModel.loginResult.observe(viewLifecycleOwner){authResult ->
-                if(authResult != null){
-                    val intent = Intent(activity, HomeActivity::class.java)
-                    startActivity(intent)
+                viewModel.loginUser(binding.textEmail.text.toString(),binding.textPassword.text.toString())
+
+                viewModel.loginResult.observe(viewLifecycleOwner){authResult ->
+                    if(authResult != null){
+                        val intent = Intent(activity, HomeActivity::class.java)
+                        startActivity(intent)
+                    }
+
                 }
-
             }
+            else {
+                Snackbar.make(binding.root,"User and/or password field is empty", Snackbar.LENGTH_SHORT).show()
+            }
+
             viewModel.error.observe(viewLifecycleOwner){ error ->
                 if(error != null){
                     val message = when(error){
-                        is FirebaseAuthInvalidUserException -> "Usuario no existe"
-                        is FirebaseAuthInvalidCredentialsException -> "Usuario y/o contraseña incorrectos"
+                        is FirebaseAuthInvalidUserException -> "There is no user with that username"
+                        is FirebaseAuthInvalidCredentialsException -> "User and/or password is incorrect"
                         else -> "ha ocurrido un error"
                     }
                     Snackbar.make(binding.root,message, Snackbar.LENGTH_SHORT).show()
