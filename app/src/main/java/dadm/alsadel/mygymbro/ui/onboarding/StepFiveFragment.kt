@@ -13,7 +13,9 @@ import dadm.alsadel.mygymbro.data.Users
 import dadm.alsadel.mygymbro.databinding.FragmentStepFiveBinding
 import dadm.alsadel.mygymbro.ui.register.RegisterFragment
 import com.google.firebase.ktx.Firebase
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class StepFiveFragment : Fragment(R.layout.fragment_step_five) {
 
     private var _binding : FragmentStepFiveBinding? = null

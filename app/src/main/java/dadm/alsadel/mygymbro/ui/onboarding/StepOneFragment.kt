@@ -11,7 +11,9 @@ import dadm.alsadel.mygymbro.ui.onboarding.StepOneFragment.StepOneCompanion.text
 import dadm.alsadel.mygymbro.ui.onboarding.StepOneFragment.StepOneCompanion.textHeight
 import dadm.alsadel.mygymbro.ui.onboarding.StepOneFragment.StepOneCompanion.textNickName
 import dadm.alsadel.mygymbro.ui.onboarding.StepOneFragment.StepOneCompanion.textWeight
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class StepOneFragment : Fragment(R.layout.fragment_step_one) {
 
     private var _binding : FragmentStepOneBinding? = null

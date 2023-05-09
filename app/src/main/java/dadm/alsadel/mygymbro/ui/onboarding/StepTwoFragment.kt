@@ -11,7 +11,9 @@ import com.google.android.material.snackbar.Snackbar
 import dadm.alsadel.mygymbro.R
 import dadm.alsadel.mygymbro.databinding.FragmentStepTwoBinding
 import dadm.alsadel.mygymbro.ui.onboarding.StepTwoFragment.StepTwoCompanion.gender
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class StepTwoFragment : Fragment(R.layout.fragment_step_two) {
 
     private var _binding : FragmentStepTwoBinding? = null

@@ -8,7 +8,9 @@ import com.google.android.material.snackbar.Snackbar
 import dadm.alsadel.mygymbro.R
 import dadm.alsadel.mygymbro.databinding.FragmentStepFourBinding
 import dadm.alsadel.mygymbro.ui.onboarding.StepFourFragment.StepFourCompanion.objectif
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class StepFourFragment : Fragment(R.layout.fragment_step_four) {
 
     private var _binding : FragmentStepFourBinding? = null

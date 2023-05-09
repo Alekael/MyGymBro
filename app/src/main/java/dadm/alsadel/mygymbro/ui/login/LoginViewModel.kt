@@ -1,7 +1,10 @@
 package dadm.alsadel.mygymbro.ui.login
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseUser
 import dadm.alsadel.mygymbro.data.auth.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,17 +16,28 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(private val authRepository: AuthRepository) : ViewModel() {
 
-    private val _login = MutableStateFlow<Result<FirebaseUser>?>(null)
+    private val _loginResult = MutableLiveData<AuthResult?>(null)
 
-    val login : StateFlow<Result<FirebaseUser>?>
+    val loginResult : LiveData<AuthResult?>
 
-        get() = _login
+        get() = _loginResult
+
+    val _error : MutableLiveData<Exception?> = MutableLiveData<Exception?>()
+
+    val error : LiveData<Exception?>
+
+        get() = _error
 
     fun loginUser(email: String, password : String){
 
         viewModelScope.launch {
-           val result =  authRepository.login(email, password)
-           _login.value = result
+            authRepository.login(email, password).addOnSuccessListener {authResult ->
+
+                _loginResult.value = authResult
+
+            }.addOnFailureListener { e ->
+                    _error.value = e
+                }
         }
 
     }

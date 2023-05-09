@@ -13,7 +13,9 @@ import dadm.alsadel.mygymbro.databinding.FragmentRegisterBinding
 import dadm.alsadel.mygymbro.ui.register.RegisterFragment.RegisterFragmentCompanion.confirmPassword
 import dadm.alsadel.mygymbro.ui.register.RegisterFragment.RegisterFragmentCompanion.email
 import dadm.alsadel.mygymbro.ui.register.RegisterFragment.RegisterFragmentCompanion.password
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RegisterFragment : Fragment(R.layout.fragment_register) {
 
     object RegisterFragmentCompanion {
