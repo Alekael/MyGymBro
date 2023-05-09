@@ -22,15 +22,15 @@ class LoginViewModel @Inject constructor(private val authRepository: AuthReposit
 
         get() = _loginResult
 
-    val _error : MutableLiveData<Exception?> = MutableLiveData<Exception?>()
+    private val _error : MutableLiveData<Exception?> = MutableLiveData<Exception?>()
 
     val error : LiveData<Exception?>
 
         get() = _error
 
-    val _currentUser : MutableLiveData<FirebaseUser> = MutableLiveData<FirebaseUser>(authRepository.currentUser)
+    private val _currentUser : MutableLiveData<FirebaseUser?> = MutableLiveData<FirebaseUser?>(null)
 
-    val currentUser : LiveData<FirebaseUser>
+    val currentUser : LiveData<FirebaseUser?>
 
     get() = _currentUser
 
@@ -47,6 +47,12 @@ class LoginViewModel @Inject constructor(private val authRepository: AuthReposit
                 }
         }
 
+    }
+
+    fun logout(){
+        authRepository.logout()
+        _loginResult.value = null
+        _currentUser.value = null
     }
 
 }

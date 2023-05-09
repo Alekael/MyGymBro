@@ -29,6 +29,6 @@ class AuthRepositoryImpl @Inject constructor(private val firebaseConnection: Fir
     }
 
     override fun logout() {
-        TODO("Not yet implemented")
+        firebaseConnection.auth.signOut()
     }
 }
