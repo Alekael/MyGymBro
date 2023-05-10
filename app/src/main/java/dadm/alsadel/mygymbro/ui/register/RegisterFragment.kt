@@ -59,7 +59,6 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
         }
 
         viewModel.exist.observe(viewLifecycleOwner){exist ->
-            Log.i("EXIST",exist.toString())
             if(exist){
                 Snackbar.make(binding.root,
                     "This email address is already in use. Please try logging in or resetting your password.",

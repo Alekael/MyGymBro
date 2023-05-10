@@ -3,6 +3,7 @@ package dadm.alsadel.mygymbro.ui.onboarding
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.DatabaseReference
@@ -18,6 +19,7 @@ class StepFiveFragment : Fragment(R.layout.fragment_step_five) {
 
     private var _binding : FragmentStepFiveBinding? = null
     private val binding get() = _binding!!
+    private val viewModel : StepFiveViewModel by viewModels()
 
     var days : String? = ""
     var duration : Double = 0.0
@@ -65,9 +67,9 @@ class StepFiveFragment : Fragment(R.layout.fragment_step_five) {
                     StepOneFragment.StepOneCompanion.textAge, StepOneFragment.StepOneCompanion.textWeight, StepOneFragment.StepOneCompanion.textHeight,
                     StepTwoFragment.StepTwoCompanion.gender, StepThreeFragment.StepThreeCompanion.level, StepFourFragment.StepFourCompanion.objectif,
                     days, duration)
-                database = FirebaseDatabase.getInstance("https://mygymbro-ff513-default-rtdb.europe-west1.firebasedatabase.app")
-                reference = database.getReference("Users")
-                reference.child(StepOneFragment.StepOneCompanion.textNickName).setValue(user)
+
+                viewModel.createUser(user,RegisterFragment.RegisterFragmentCompanion.password)
+
                 findNavController().navigate(R.id.loginFragment)
             }
         }

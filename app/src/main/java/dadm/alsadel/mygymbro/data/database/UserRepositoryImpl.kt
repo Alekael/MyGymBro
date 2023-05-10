@@ -1,5 +1,6 @@
 package dadm.alsadel.mygymbro.data.database
 
+import android.provider.ContactsContract.CommonDataKinds.Nickname
 import com.google.firebase.database.DatabaseReference
 import dadm.alsadel.mygymbro.data.FirebaseConnection
 import dadm.alsadel.mygymbro.domain.model.User
@@ -15,8 +16,9 @@ class UserRepositoryImpl @Inject constructor(private val firebaseConnection: Fir
 
     }
 
-    override suspend fun getUser(email: String): User {
-        TODO("Not yet implemented")
+    override suspend fun getUserByNickName(nickname: String): DatabaseReference {
+
+        return dbReference.child(nickname)
     }
 
 }
