@@ -39,7 +39,14 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
              password = binding.textPassword.text.toString()
              confirmPassword = binding.textConfirmPassword.text.toString()
             if ( !email.isEmpty() && !password.isEmpty() && !confirmPassword.isEmpty()) {
-                if (!password.equals(confirmPassword)) {
+                if(password.length < 6){
+                    Snackbar.make(
+                        binding.root,
+                        "Size of password is smaller than 6",
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                }
+                else if (!password.equals(confirmPassword)) {
                     Snackbar.make(
                         binding.root,
                         R.string.snackDifferentPassword,

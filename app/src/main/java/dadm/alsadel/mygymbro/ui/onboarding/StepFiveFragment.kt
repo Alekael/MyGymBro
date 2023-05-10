@@ -70,6 +70,12 @@ class StepFiveFragment : Fragment(R.layout.fragment_step_five) {
 
                 viewModel.createUser(user,RegisterFragment.RegisterFragmentCompanion.password)
 
+
+            }
+        }
+
+        viewModel.signUpResult.observe(viewLifecycleOwner){authResult ->
+            if(authResult != null){
                 findNavController().navigate(R.id.loginFragment)
             }
         }
