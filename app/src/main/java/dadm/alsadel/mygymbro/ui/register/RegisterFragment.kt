@@ -1,14 +1,15 @@
 package dadm.alsadel.mygymbro.ui.register
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import androidx.core.view.get
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.FirebaseException
+import com.google.firebase.FirebaseNetworkException
 import dadm.alsadel.mygymbro.R
-import dadm.alsadel.mygymbro.data.Users
 import dadm.alsadel.mygymbro.databinding.FragmentRegisterBinding
 import dadm.alsadel.mygymbro.ui.register.RegisterFragment.RegisterFragmentCompanion.confirmPassword
 import dadm.alsadel.mygymbro.ui.register.RegisterFragment.RegisterFragmentCompanion.email
@@ -26,7 +27,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
 
     private var _binding : FragmentRegisterBinding? = null
     private val binding get() = _binding!!
-
+    private val viewModel : RegisterViewModel by viewModels()
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -45,7 +46,8 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
                         Snackbar.LENGTH_SHORT
                     ).show()
                 } else {
-                    findNavController().navigate(R.id.stepOneFragment)
+
+                    viewModel.verifySignUp(email)
                 }
             }else{
                 Snackbar.make(
@@ -56,9 +58,35 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
             }
         }
 
+        viewModel.exist.observe(viewLifecycleOwner){exist ->
+            Log.i("EXIST",exist.toString())
+            if(exist){
+                Snackbar.make(binding.root,
+                    "This email address is already in use. Please try logging in or resetting your password.",
+                    Snackbar.LENGTH_SHORT).show()
+            }
+            else {
+                findNavController().navigate(R.id.stepOneFragment)
+            }
+        }
+
+        viewModel.error.observe(viewLifecycleOwner){error ->
+            if(error != null){
+                val message = when(error){
+                    is FirebaseNetworkException -> "Unable to connect to verify user. Please check your internet connection and try again."
+                    else -> "A Firebase error has ocurred. Please try again later or contact support for assistance."
+                }
+
+                Snackbar.make(binding.root,message, Snackbar.LENGTH_SHORT).show()
+            }
+
+        }
+
         binding.optionToLogin.setOnClickListener(){
             findNavController().navigate(R.id.loginFragment)
         }
+
+
 
     }
 

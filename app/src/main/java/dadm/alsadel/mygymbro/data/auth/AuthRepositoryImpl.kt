@@ -5,6 +5,7 @@ import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.SignInMethodQueryResult
 import dadm.alsadel.mygymbro.data.FirebaseConnection
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
@@ -20,12 +21,14 @@ class AuthRepositoryImpl @Inject constructor(private val firebaseConnection: Fir
        return firebaseConnection.auth.signInWithEmailAndPassword(email,password)
     }
 
-    override suspend fun signup(
-        name: String,
-        email: String,
-        password: String
-    ): Result<FirebaseUser> {
-        TODO("Not yet implemented")
+    override suspend fun signup(email: String, password: String): Task<AuthResult> {
+
+        return firebaseConnection.auth.createUserWithEmailAndPassword(email, password)
+    }
+
+    override suspend fun verifyUser(email: String) : Task<SignInMethodQueryResult> {
+
+        return firebaseConnection.auth.fetchSignInMethodsForEmail(email)
     }
 
     override fun logout() {

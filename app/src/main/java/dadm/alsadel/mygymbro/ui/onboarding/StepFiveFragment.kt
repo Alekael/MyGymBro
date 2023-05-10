@@ -7,12 +7,10 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ktx.database
 import dadm.alsadel.mygymbro.R
-import dadm.alsadel.mygymbro.data.Users
 import dadm.alsadel.mygymbro.databinding.FragmentStepFiveBinding
+import dadm.alsadel.mygymbro.domain.model.User
 import dadm.alsadel.mygymbro.ui.register.RegisterFragment
-import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -62,8 +60,8 @@ class StepFiveFragment : Fragment(R.layout.fragment_step_five) {
                 Snackbar.make(binding.root, R.string.snackStepFive, Snackbar.LENGTH_SHORT).show()
 
             }else {
-                val user = Users(
-                    RegisterFragment.RegisterFragmentCompanion.email, RegisterFragment.RegisterFragmentCompanion.password, StepOneFragment.StepOneCompanion.textNickName,
+                val user = User(
+                    RegisterFragment.RegisterFragmentCompanion.email, StepOneFragment.StepOneCompanion.textNickName,
                     StepOneFragment.StepOneCompanion.textAge, StepOneFragment.StepOneCompanion.textWeight, StepOneFragment.StepOneCompanion.textHeight,
                     StepTwoFragment.StepTwoCompanion.gender, StepThreeFragment.StepThreeCompanion.level, StepFourFragment.StepFourCompanion.objectif,
                     days, duration)
