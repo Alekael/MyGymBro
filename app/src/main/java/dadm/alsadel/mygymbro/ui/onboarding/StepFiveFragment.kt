@@ -7,13 +7,17 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ktx.database
 import dadm.alsadel.mygymbro.R
+import dadm.alsadel.mygymbro.data.Exercise
 import dadm.alsadel.mygymbro.data.Users
 import dadm.alsadel.mygymbro.databinding.FragmentStepFiveBinding
 import dadm.alsadel.mygymbro.ui.register.RegisterFragment
-import com.google.firebase.ktx.Firebase
+import dadm.alsadel.mygymbro.data.ResponseApi
 import dagger.hilt.android.AndroidEntryPoint
+import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.http.GET
+
 
 @AndroidEntryPoint
 class StepFiveFragment : Fragment(R.layout.fragment_step_five) {
@@ -72,16 +76,30 @@ class StepFiveFragment : Fragment(R.layout.fragment_step_five) {
                 reference.child(StepOneFragment.StepOneCompanion.textNickName).setValue(user)
                 findNavController().navigate(R.id.loginFragment)
             }
+            /*Nuevo Código*/
+
+
+            val service = Retrofit.Builder()
+                .baseUrl("https://randomuser.me/")
+                .addConverterFactory(MoshiConverterFactory.create())
+                .build()
+                .create(ExerciseService::class.java)
+
+            
         }
 
         binding.btback.setOnClickListener(){
             findNavController().navigate(R.id.stepFourFragment)
         }
     }
-
+    interface ExerciseService {
+        @GET("/api")
+        suspend fun getUsers(): ResponseApi
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
 }
