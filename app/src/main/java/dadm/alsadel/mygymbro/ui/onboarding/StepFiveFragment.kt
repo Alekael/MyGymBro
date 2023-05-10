@@ -3,6 +3,7 @@ package dadm.alsadel.mygymbro.ui.onboarding
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.DatabaseReference
@@ -14,9 +15,13 @@ import dadm.alsadel.mygymbro.databinding.FragmentStepFiveBinding
 import dadm.alsadel.mygymbro.ui.register.RegisterFragment
 import dadm.alsadel.mygymbro.data.ResponseApi
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import org.json.JSONArray
+import org.json.JSONObject
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 
 @AndroidEntryPoint
@@ -32,9 +37,32 @@ class StepFiveFragment : Fragment(R.layout.fragment_step_five) {
     private lateinit var database: FirebaseDatabase
 
 
+    interface ExerciseService {
+        @GET("/exercises")
+        suspend fun getExercises(@Query("muscles")  muscle:String): ResponseApi
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentStepFiveBinding.bind(view)
+
+        val service = Retrofit.Builder()
+            .baseUrl("https://api.api-ninjas.com/v1/")
+            .addConverterFactory(MoshiConverterFactory.create())
+            .build()
+            .create(ExerciseService::class.java)
+
+        lifecycleScope.launch {
+            val Exercises:JSONArray = service.getExercises("biceps").jsonArray
+
+            for (i in 0 until Exercises.length()) {
+                val Exercise:MutableList<JSONObject> = mutableListOf<JSONObject>()
+
+                if(StepThreeFragment.StepThreeCompanion.level==Exercises.getJSONObject(i).get("difficulty")){
+                    Exercise.add( Exercises.getJSONObject(i))
+                }
+            }
+
+        }
 
         binding.btfinish.setOnClickListener{
             if (binding.checkBoxMonday.isChecked()){
@@ -76,26 +104,19 @@ class StepFiveFragment : Fragment(R.layout.fragment_step_five) {
                 reference.child(StepOneFragment.StepOneCompanion.textNickName).setValue(user)
                 findNavController().navigate(R.id.loginFragment)
             }
-            /*Nuevo Código*/
+           
 
 
-            val service = Retrofit.Builder()
-                .baseUrl("https://randomuser.me/")
-                .addConverterFactory(MoshiConverterFactory.create())
-                .build()
-                .create(ExerciseService::class.java)
 
-            
+
+
         }
 
         binding.btback.setOnClickListener(){
             findNavController().navigate(R.id.stepFourFragment)
         }
     }
-    interface ExerciseService {
-        @GET("/api")
-        suspend fun getUsers(): ResponseApi
-    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
