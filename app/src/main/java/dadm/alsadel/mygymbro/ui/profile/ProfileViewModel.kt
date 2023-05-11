@@ -1,6 +1,7 @@
 package dadm.alsadel.mygymbro.ui.profile
 
 import android.provider.ContactsContract.Data
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -27,11 +28,12 @@ class ProfileViewModel @Inject constructor(private val userRepository: UserRepos
 
         viewModelScope.launch {
 
-            userRepository.getUserByEmail(authRepository.currentUser.toString()).get().addOnSuccessListener {user ->
-
+            userRepository.getUserByEmail(authRepository.currentUser?.email.toString()).get().addOnSuccessListener {user ->
                 if(user.exists()){
-                    _userInfo.value = user
+                    _userInfo.value = user.children.iterator().next()
                 }
+            }.addOnFailureListener {
+                Log.i("ERROR", it.toString())
             }
         }
     }

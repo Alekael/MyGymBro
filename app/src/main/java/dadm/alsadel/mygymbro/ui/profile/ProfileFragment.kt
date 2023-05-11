@@ -72,14 +72,17 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
 
         profileViewModel.userInfo.observe(viewLifecycleOwner){user->
-            Log.i("HOLAAA","adiooooos")
+
             if(user != null){
-                Log.i("NICKNAME",user.child("nickname").toString())
-                binding.tvName.text = user.child("nickname").toString()
+                binding.tvName.text = user.child("nickname").value.toString()
+                binding.tvEmail.text = user.child("email").value.toString()
+                binding.tvGender.text = user.child("gender").value.toString()
+                binding.tvWeight.text = user.child("weight").value.toString()
+                binding.tvHeight.text = user.child("height").value.toString()
+                binding.tvAge.text = user.child("age").value.toString()
+                binding.tvSportLevel.text = user.child("level").value.toString()
             }
         }
-
-
     }
 
     override fun onDestroyView() {
