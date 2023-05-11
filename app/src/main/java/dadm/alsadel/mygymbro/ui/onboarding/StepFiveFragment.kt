@@ -10,6 +10,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import dadm.alsadel.mygymbro.R
+import dadm.alsadel.mygymbro.data.Exercise
 import dadm.alsadel.mygymbro.data.ResponseApi
 import dadm.alsadel.mygymbro.databinding.FragmentStepFiveBinding
 import dadm.alsadel.mygymbro.domain.model.User
@@ -18,9 +19,15 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Header
+import retrofit2.http.Headers
 import retrofit2.http.Query
 
 @AndroidEntryPoint
@@ -35,18 +42,23 @@ class StepFiveFragment : Fragment(R.layout.fragment_step_five) {
 
     private lateinit var reference: DatabaseReference
     private lateinit var database: FirebaseDatabase
-    private val exercise:MutableList<JSONObject> = mutableListOf<JSONObject>()
-
-    interface ExerciseService {
-        @GET("/exercises")
-        suspend fun getExercises(@Query("muscles")  muscle:String): ResponseApi
+    private val exercise:MutableList<Exercise> = mutableListOf<Exercise>()
+    val muscle = "biceps"
+    val api_key = "YpFI5RlK4EeVml4kF4bXrQ==ltYD4eP4o14u2kSZ"
+    interface ApiService {
+        @GET("exercises")
+        fun getExercises(@Query("muscle") muscle: String, @Header("X-Api-Key") apiKey: String): Call<ResponseApi>
     }
 
-    private val service = Retrofit.Builder()
-        .baseUrl("https://api.api-ninjas.com/v1/")
-            .addConverterFactory(MoshiConverterFactory.create())
+
+        private val service = Retrofit.Builder()
+            .baseUrl("https://api.api-ninjas.com/v1/")
+            .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(ExerciseService::class.java)
+
+
+    val apiService = service.create(ApiService::class.java)
+    val call = apiService.getExercises(muscle, api_key)
 
 
 
@@ -57,18 +69,33 @@ class StepFiveFragment : Fragment(R.layout.fragment_step_five) {
 
 
 
+        call.enqueue(object : Callback<ResponseApi> {
+            override fun onResponse(call: Call<ResponseApi>, response: Response<ResponseApi>) {
+                if (response.isSuccessful) {
+
+                    response.body()?.exercises?.forEach(){
+                        if(StepThreeFragment.StepThreeCompanion.level==it.difficulty){
+                            exercise.add( it)
+                        }
 
 
-        lifecycleScope.launch {
-            val Exercises: JSONArray = service.getExercises("biceps").jsonArray
+                    }
 
-            for (i in 0 until Exercises.length()) {
 
-                if(StepThreeFragment.StepThreeCompanion.level==Exercises.getJSONObject(i).get("difficulty")){
-                    exercise.add( Exercises.getJSONObject(i))
+
+                    response.body()?.exercises
+                } else {
+                    println("Error: ${response.code()} ${response.errorBody()?.string()}")
                 }
             }
-        }
+
+            override fun onFailure(call: Call<ResponseApi>, t: Throwable) {
+                println("Error: ${t.message}")
+            }
+        })
+
+
+
 
 
 
