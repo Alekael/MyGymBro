@@ -12,6 +12,7 @@ import com.google.firebase.database.FirebaseDatabase
 import dadm.alsadel.mygymbro.R
 import dadm.alsadel.mygymbro.data.Exercise
 import dadm.alsadel.mygymbro.data.ResponseApi
+import dadm.alsadel.mygymbro.data.TrainingPlan
 import dadm.alsadel.mygymbro.databinding.FragmentStepFiveBinding
 import dadm.alsadel.mygymbro.domain.model.User
 import dadm.alsadel.mygymbro.ui.register.RegisterFragment
@@ -136,6 +137,14 @@ class StepFiveFragment : Fragment(R.layout.fragment_step_five) {
                     days, duration)
 
                 viewModel.createUser(user,RegisterFragment.RegisterFragmentCompanion.password)
+
+                val plan: HashMap<String, List<Exercise>> = hashMapOf("Monday" to exercise,
+                    "Tuesday" to exercise)
+                val training_plan = TrainingPlan("adamrahmoun", plan)
+                reference = database.getReference("TrainingPlans")
+                reference.child(training_plan.username).setValue(training_plan)
+
+                findNavController().navigate(R.id.loginFragment)
 
 
             }

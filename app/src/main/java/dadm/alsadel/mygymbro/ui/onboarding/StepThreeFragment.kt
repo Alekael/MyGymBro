@@ -26,13 +26,13 @@ class StepThreeFragment : Fragment(R.layout.fragment_step_three){
 
         binding.btnContinue.setOnClickListener{
             if (binding.radioButtonAdvanced.isChecked()){
-                level  = "Advanced"
+                level  = "advanced"
                 findNavController().navigate(R.id.stepFourFragment)
             }else if(binding.radioButtonBeginner.isChecked()){
-                level  = "Beginner"
+                level  = "beginner"
                 findNavController().navigate(R.id.stepFourFragment)
             }else if (binding.radioButtonIntermediate.isChecked()){
-                level = "Intermediate"
+                level = "intermediate"
                 findNavController().navigate(R.id.stepFourFragment)
             } else{
                 Snackbar.make(binding.root, R.string.snackSelectOption, Snackbar.LENGTH_SHORT).show()
