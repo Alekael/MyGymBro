@@ -1,5 +1,6 @@
 package dadm.alsadel.mygymbro.ui.profile
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import dadm.alsadel.mygymbro.MainActivity
 import dadm.alsadel.mygymbro.R
 import dadm.alsadel.mygymbro.data.FirebaseConnection
 import dadm.alsadel.mygymbro.data.auth.AuthRepository
@@ -63,8 +65,13 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
         binding.btnLogout.setOnClickListener(){
             loginviewModel.logout()
-            activity?.finish()
-            findNavController().navigate(R.id.loginFragment)
+
+            // Eliminar todas las actividades anteriores de la pila y ejecutar la actividad principal con el LoginFragment
+            val intent = Intent(requireContext(),MainActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            startActivity(intent)
+
+            requireActivity().finish()
         }
 
         profileViewModel.getUserProfile()
