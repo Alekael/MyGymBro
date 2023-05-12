@@ -16,6 +16,7 @@ import dadm.alsadel.mygymbro.data.ResponseApi
 import dadm.alsadel.mygymbro.data.TrainingPlan
 import dadm.alsadel.mygymbro.databinding.FragmentStepFiveBinding
 import dadm.alsadel.mygymbro.domain.model.User
+import dadm.alsadel.mygymbro.ui.onboarding.StepOneFragment.StepOneCompanion.textNickName
 import dadm.alsadel.mygymbro.ui.register.RegisterFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -77,7 +78,7 @@ class StepFiveFragment : Fragment(R.layout.fragment_step_five), ConfirmationRegi
 
                     response.body()?.exercises?.forEach(){
                         if(StepThreeFragment.StepThreeCompanion.level==it.difficulty){
-                            exercise.add( it)
+                            exercise.add(it)
                         }
 
 
@@ -132,18 +133,19 @@ class StepFiveFragment : Fragment(R.layout.fragment_step_five), ConfirmationRegi
 
             }else {
                 val user = User(
-                    RegisterFragment.RegisterFragmentCompanion.email, StepOneFragment.StepOneCompanion.textNickName,
+                    RegisterFragment.RegisterFragmentCompanion.email, textNickName,
                     StepOneFragment.StepOneCompanion.textAge, StepOneFragment.StepOneCompanion.textWeight, StepOneFragment.StepOneCompanion.textHeight,
                     StepTwoFragment.StepTwoCompanion.gender, StepThreeFragment.StepThreeCompanion.level, StepFourFragment.StepFourCompanion.objectif,
                     days, duration)
 
                 viewModel.createUser(user,RegisterFragment.RegisterFragmentCompanion.password)
 
-                val plan: HashMap<String, List<Exercise>> = hashMapOf("Monday" to exercise,
-                    "Tuesday" to exercise)
-                val training_plan = TrainingPlan("adamrahmoun", plan)
+
+
+                val plan: HashMap<String, List<Exercise>> = hashMapOf("Monday" to exercise)
+                val trainingPlan = TrainingPlan(textNickName, plan)
                 reference = database.getReference("TrainingPlans")
-                reference.child(training_plan.username).setValue(training_plan)
+                reference.child(trainingPlan.username).setValue(trainingPlan)
 
 
 

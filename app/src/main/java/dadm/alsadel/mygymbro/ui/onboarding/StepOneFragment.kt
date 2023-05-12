@@ -27,6 +27,7 @@ class StepOneFragment : Fragment(R.layout.fragment_step_one) {
         var textWeight : Double = 0.0
         var textHeight : Double = 0.0
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentStepOneBinding.bind(view)
