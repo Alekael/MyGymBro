@@ -15,6 +15,8 @@ interface AuthRepository {
 
     suspend fun verifyUser(email : String) : Task<SignInMethodQueryResult>
 
+    suspend fun verifyEmail() : Task<Void>
+
     fun logout()
 
 }

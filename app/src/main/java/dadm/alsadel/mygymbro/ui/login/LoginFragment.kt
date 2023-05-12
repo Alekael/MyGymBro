@@ -34,14 +34,16 @@ class LoginFragment : Fragment(R.layout.fragment_login){
 
                 viewModel.loginUser(binding.textEmail.text.toString(),binding.textPassword.text.toString())
 
-                viewModel.loginResult.observe(viewLifecycleOwner){authResult ->
-                    if(authResult != null){
-
+                viewModel.emailVerified.observe(viewLifecycleOwner){emailVerified ->
+                    if(emailVerified){
                         val intent = Intent(activity, HomeActivity::class.java)
                         startActivity(intent)
                     }
-
+                    else {
+                        Snackbar.make(binding.root,"You have to verify your email before sign in", Snackbar.LENGTH_SHORT).show()
+                    }
                 }
+
             }
             else {
                 Snackbar.make(binding.root,"User and/or password field is empty", Snackbar.LENGTH_SHORT).show()

@@ -76,6 +76,15 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
             }
         }
 
+        /*viewModel.realEmail.observe(viewLifecycleOwner){emailExist->
+            if(emailExist){
+                Snackbar.make(binding.root,
+                "Please verify your email by clicking on the link we sent you. " +
+                        "If you did not receive the email, " +
+                        "please check your spam folder or click the button to resend the verification email.",Snackbar.LENGTH_SHORT).show()
+            }
+        }*/
+
         viewModel.error.observe(viewLifecycleOwner){error ->
             if(error != null){
                 val message = when(error){

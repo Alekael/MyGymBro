@@ -43,4 +43,10 @@
     <string name="snackDifferentPassword">The passwords doesn\'t match</string>
     <string name="snackEmptyFields">Some fields remain empty</string>
     <string name="snackSelectOption">Select an option</string>
+    <string name="confirmRegister">Registration confirmation</string>
+    <string name="confirmRegisterMessage">"Please verify your email by clicking on the link we sent you."</string>
+    <string name="confirmRegisterMessage2">"If you did not receive the email," +
+                "please check your spam folder or click the button to resend the verification email."</string>
+    <string name="confirmRegisterButton">Go to Login</string>
+    <string name="resendEmail">Resend Email</string>
 </resources>

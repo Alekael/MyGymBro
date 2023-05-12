@@ -1,6 +1,7 @@
 package dadm.alsadel.mygymbro.ui.onboarding
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -32,7 +33,7 @@ import retrofit2.http.Headers
 import retrofit2.http.Query
 
 @AndroidEntryPoint
-class StepFiveFragment : Fragment(R.layout.fragment_step_five) {
+class StepFiveFragment : Fragment(R.layout.fragment_step_five), ConfirmationRegisterDialog.ConfirmationDialogCallBack {
 
     private var _binding : FragmentStepFiveBinding? = null
     private val binding get() = _binding!!
@@ -42,7 +43,7 @@ class StepFiveFragment : Fragment(R.layout.fragment_step_five) {
     var duration : Double = 0.0
 
     private lateinit var reference: DatabaseReference
-    private lateinit var database: FirebaseDatabase
+    private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
     private val exercise:MutableList<Exercise> = mutableListOf<Exercise>()
     val muscle = "biceps"
     val api_key = "YpFI5RlK4EeVml4kF4bXrQ==ltYD4eP4o14u2kSZ"
@@ -144,7 +145,6 @@ class StepFiveFragment : Fragment(R.layout.fragment_step_five) {
                 reference = database.getReference("TrainingPlans")
                 reference.child(training_plan.username).setValue(training_plan)
 
-                findNavController().navigate(R.id.loginFragment)
 
 
             }
@@ -152,7 +152,9 @@ class StepFiveFragment : Fragment(R.layout.fragment_step_five) {
 
         viewModel.signUpResult.observe(viewLifecycleOwner){authResult ->
             if(authResult != null){
-                findNavController().navigate(R.id.loginFragment)
+                viewModel.verifyEmail()
+                ConfirmationRegisterDialog().show(childFragmentManager,null)
+
             }
         }
 
@@ -165,5 +167,9 @@ class StepFiveFragment : Fragment(R.layout.fragment_step_five) {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun confirmRegister() {
+        findNavController().navigate(R.id.loginFragment)
     }
 }

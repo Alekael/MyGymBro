@@ -13,10 +13,10 @@ import javax.inject.Inject
 @HiltViewModel
 class RegisterViewModel @Inject constructor(private val authRepository: AuthRepository) : ViewModel() {
 
-    private val _exist : MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    private val _Userexist : MutableLiveData<Boolean> = MutableLiveData<Boolean>()
 
     val exist : LiveData<Boolean>
-        get() = _exist
+        get() = _Userexist
 
     private val _error : MutableLiveData<Exception> = MutableLiveData<Exception>()
 
@@ -26,13 +26,14 @@ class RegisterViewModel @Inject constructor(private val authRepository: AuthRepo
     fun verifySignUp(email : String){
 
         viewModelScope.launch {
+
             authRepository.verifyUser(email).addOnSuccessListener {result ->
-                Log.i("VERIFY",result.signInMethods.toString())
+
                 if (result.signInMethods!! != null && !result.signInMethods!!.isEmpty()){
-                    _exist.postValue(true)
+                    _Userexist.postValue(true)
                 }
                 else {
-                    _exist.postValue(false)
+                    _Userexist.postValue(false)
                 }
             }.addOnFailureListener {exception ->
                 _error.value = exception
@@ -41,4 +42,5 @@ class RegisterViewModel @Inject constructor(private val authRepository: AuthRepo
 
 
     }
+
 }

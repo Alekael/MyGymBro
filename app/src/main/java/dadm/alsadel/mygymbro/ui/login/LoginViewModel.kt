@@ -25,23 +25,22 @@ class LoginViewModel @Inject constructor(private val authRepository: AuthReposit
 
     private val _error : MutableLiveData<Exception?> = MutableLiveData<Exception?>()
 
+    private val _emailVerified : MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+
+    val emailVerified : LiveData<Boolean>
+        get() = _emailVerified
+
     val error : LiveData<Exception?>
 
         get() = _error
 
-    private val _currentUser : MutableLiveData<FirebaseUser?> = MutableLiveData<FirebaseUser?>(null)
-
-    val currentUser : LiveData<FirebaseUser?>
-
-    get() = _currentUser
-
     fun loginUser(email: String, password : String){
 
         viewModelScope.launch {
-            authRepository.login(email, password).addOnSuccessListener {authResult ->
+            authRepository.login(email, password).addOnSuccessListener {
 
-                _loginResult.value = authResult
-                _currentUser.value = authResult.user
+                _emailVerified.value = authRepository.currentUser!!.isEmailVerified
+
 
             }.addOnFailureListener { e ->
                     _error.value = e
@@ -53,7 +52,6 @@ class LoginViewModel @Inject constructor(private val authRepository: AuthReposit
     fun logout(){
         authRepository.logout()
         _loginResult.value = null
-        _currentUser.value = null
     }
 
 }
