@@ -50,7 +50,7 @@ class StepFiveFragment : Fragment(R.layout.fragment_step_five), ConfirmationRegi
     val api_key = "YpFI5RlK4EeVml4kF4bXrQ==ltYD4eP4o14u2kSZ"
     interface ApiService {
         @GET("exercises")
-        fun getExercises(@Query("muscle") muscle: String, @Header("X-Api-Key") apiKey: String): Call<ResponseApi>
+        fun getExercises(@Query("muscle") muscle: String, @Header("X-Api-Key") apiKey: String): Call<List<Exercise>>
     }
 
 
@@ -71,28 +71,26 @@ class StepFiveFragment : Fragment(R.layout.fragment_step_five), ConfirmationRegi
         _binding = FragmentStepFiveBinding.bind(view)
 
 
-
-        call.enqueue(object : Callback<ResponseApi> {
-            override fun onResponse(call: Call<ResponseApi>, response: Response<ResponseApi>) {
+        Log.d("TAG", "Precall")
+        call.enqueue(object : Callback<List<Exercise>> {
+            override fun onResponse(call: Call<List<Exercise>>, response: Response<List<Exercise>>) {
                 if (response.isSuccessful) {
 
-                    response.body()?.exercises?.forEach(){
+                    response.body()?.forEach(){
+                        Log.d("TAG", "Exercies: $it")
                         if(StepThreeFragment.StepThreeCompanion.level==it.difficulty){
                             exercise.add(it)
                         }
 
 
                     }
-
-
-
-                    response.body()?.exercises
+                    response.body()
                 } else {
                     println("Error: ${response.code()} ${response.errorBody()?.string()}")
                 }
             }
 
-            override fun onFailure(call: Call<ResponseApi>, t: Throwable) {
+            override fun onFailure(call: Call<List<Exercise>>, t: Throwable) {
                 println("Error: ${t.message}")
             }
         })
@@ -145,7 +143,8 @@ class StepFiveFragment : Fragment(R.layout.fragment_step_five), ConfirmationRegi
                 val plan: HashMap<String, List<Exercise>> = hashMapOf("Monday" to exercise)
                 val trainingPlan = TrainingPlan(textNickName, plan)
                 reference = database.getReference("TrainingPlans")
-                reference.child(trainingPlan.username).setValue(trainingPlan)
+                Log.d("TAG", "plan: $plan")
+                reference.child(trainingPlan.username).setValue(plan)
 
 
 
