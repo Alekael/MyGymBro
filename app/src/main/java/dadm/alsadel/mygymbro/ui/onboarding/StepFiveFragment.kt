@@ -19,7 +19,7 @@ import dadm.alsadel.mygymbro.domain.model.User
 import dadm.alsadel.mygymbro.ui.onboarding.StepOneFragment.StepOneCompanion.textNickName
 import dadm.alsadel.mygymbro.ui.register.RegisterFragment
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.Call
@@ -34,6 +34,7 @@ import retrofit2.http.Headers
 import retrofit2.http.Query
 import java.lang.Math.ceil
 import java.lang.Math.floor
+import java.util.concurrent.CountDownLatch
 
 @AndroidEntryPoint
 class StepFiveFragment : Fragment(R.layout.fragment_step_five), ConfirmationRegisterDialog.ConfirmationDialogCallBack {
@@ -71,36 +72,7 @@ class StepFiveFragment : Fragment(R.layout.fragment_step_five), ConfirmationRegi
         super.onViewCreated(view, savedInstanceState)
 
         _binding = FragmentStepFiveBinding.bind(view)
-        val number_exercises = floor((duration * days.size) / 10)
-        val number_calls_API = ceil(number_exercises / 3).toInt()
 
-        for (i in 0..number_calls_API - 1) {
-         val call = apiService.getExercises(muscle[i % muscle.size], StepThreeFragment.StepThreeCompanion.level, api_key)
-        Log.d("TAG", "Precall")
-
-        call.enqueue(object : Callback<List<Exercise>> {
-            override fun onResponse(call: Call<List<Exercise>>, response: Response<List<Exercise>>) {
-                if (response.isSuccessful) {
-
-                    response.body()?.forEach(){
-                        Log.d("TAG", "Exercies: $it")
-                            exercise.add(it)
-
-
-
-        }
-                    response.body()
-                } else {
-                    println("Error: ${response.code()} ${response.errorBody()?.string()}")
-                }
-            }
-
-            override fun onFailure(call: Call<List<Exercise>>, t: Throwable) {
-                println("Error: ${t.message}")
-            }
-        })
-
-        }
 
         binding.btfinish.setOnClickListener{
             if (binding.checkBoxMonday.isChecked()){
@@ -124,7 +96,9 @@ class StepFiveFragment : Fragment(R.layout.fragment_step_five), ConfirmationRegi
             if (binding.checkBoxSunday.isChecked()){
                 days.add(all_days[6])
         }
-            duration = binding.txtSessionTime.text.toString().toDouble()
+           if (binding.txtSessionTime.text.toString().isEmpty()){
+               Snackbar.make(binding.root, R.string.snackStepFive, Snackbar.LENGTH_SHORT).show()
+           }else  duration = binding.txtSessionTime.text.toString().toDouble()
 
 
 
@@ -142,16 +116,45 @@ class StepFiveFragment : Fragment(R.layout.fragment_step_five), ConfirmationRegi
 
                 viewModel.createUser(user,RegisterFragment.RegisterFragmentCompanion.password)
 
-                val plan: HashMap<String, List<Exercise>> = hashMapOf("Monday" to exercise)
-                /*val sublistSize = exercise.size / days.size
-                for (i in 0..days.size - 1){
-                    plan.put(days[i], exercise.subList(sublistSize*i, sublistSize *( i + 1)))
-                }*/
+                val scope = CoroutineScope(Dispatchers.Main)
 
-                val trainingPlan = TrainingPlan(textNickName, plan)
-                reference = database.getReference("TrainingPlans")
-                Log.d("TAG", "plan: $plan")
-                reference.child(trainingPlan.username).setValue(plan)
+                val number_exercises = floor((duration * days.size) / 10)
+                val number_calls_API: Int = ceil(number_exercises / 3).toInt()
+                Log.d("TAG", "Precall $number_calls_API")
+
+                val exercisesDeferred = (0 until number_calls_API).map { i ->
+                    scope.async(Dispatchers.IO) {
+                        val call = apiService.getExercises(
+                            muscle[i % muscle.size],
+                            StepThreeFragment.StepThreeCompanion.level,
+                            api_key
+                        )
+                        Log.d("TAG", "Precall2")
+
+                        val response = call.execute()
+                        if (response.isSuccessful) {
+                            response.body() ?: emptyList()
+                        } else {
+                            Log.e("TAG", "Error: ${response.code()} ${response.errorBody()?.string()}")
+                            emptyList()
+                        }
+                    }
+                }
+
+                scope.launch {
+                    val exercise = exercisesDeferred.awaitAll().flatten()
+                    val plan: HashMap<String, List<Exercise>> = hashMapOf()
+                    val sublistSize = exercise.size / days.size
+                    for (i in 0..days.size - 1){
+                        plan.put(days[i], exercise.subList(sublistSize*i, sublistSize *( i + 1)))
+                    }
+                    val trainingPlan = TrainingPlan(textNickName, plan)
+                    reference = database.getReference("TrainingPlans")
+                    Log.d("TAG", "plan: $plan")
+                    reference.child(trainingPlan.username).setValue(plan)
+                }
+
+
 
             }
         }
