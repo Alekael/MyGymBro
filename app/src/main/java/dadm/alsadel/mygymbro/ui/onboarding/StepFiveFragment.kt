@@ -63,9 +63,7 @@ class StepFiveFragment : Fragment(R.layout.fragment_step_five), ConfirmationRegi
             .build()
 
 
-    val apiService = service.create(ApiService::class.java)
-    var call: Call<List<Exercise>>? =  null
-    //= apiService.getExercises(muscle, StepThreeFragment.StepThreeCompanion.level, api_key)
+    val apiService = service.create(ApiService::class.java)    //= apiService.getExercises(muscle0, StepThreeFragment.StepThreeCompanion.level, api_key)
 
 
 
@@ -75,10 +73,12 @@ class StepFiveFragment : Fragment(R.layout.fragment_step_five), ConfirmationRegi
         _binding = FragmentStepFiveBinding.bind(view)
         val number_exercises = floor((duration * days.size) / 10)
         val number_calls_API = ceil(number_exercises / 3).toInt()
+
         for (i in 0..number_calls_API - 1) {
-         call = apiService.getExercises(muscle[i % muscle.size], StepThreeFragment.StepThreeCompanion.level, api_key)
+         val call = apiService.getExercises(muscle[i % muscle.size], StepThreeFragment.StepThreeCompanion.level, api_key)
         Log.d("TAG", "Precall")
-        call!!.enqueue(object : Callback<List<Exercise>> {
+
+        call.enqueue(object : Callback<List<Exercise>> {
             override fun onResponse(call: Call<List<Exercise>>, response: Response<List<Exercise>>) {
                 if (response.isSuccessful) {
 
