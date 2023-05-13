@@ -143,11 +143,9 @@ class StepFiveFragment : Fragment(R.layout.fragment_step_five), ConfirmationRegi
                 viewModel.createUser(user,RegisterFragment.RegisterFragmentCompanion.password)
 
                 val plan: HashMap<String, List<Exercise>> = hashMapOf()
-                val sublistSize = ceil((exercise.size.toDouble() + days.size.toDouble() - 1) / days.size.toDouble()).toInt()
-                val sublists = exercise.chunked(sublistSize)
-
+                val sublistSize = exercise.size / days.size
                 for (i in 0..days.size - 1){
-                    plan.put(days[i], sublists[i])
+                    plan.put(days[i], exercise.subList(sublistSize*i, sublistSize *( i + 1)))
                 }
 
                 val trainingPlan = TrainingPlan(textNickName, plan)
