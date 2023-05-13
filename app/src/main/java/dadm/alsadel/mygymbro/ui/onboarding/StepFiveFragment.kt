@@ -32,6 +32,7 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.Query
+import java.lang.Math.ceil
 import java.lang.Math.floor
 
 @AndroidEntryPoint
@@ -48,7 +49,7 @@ class StepFiveFragment : Fragment(R.layout.fragment_step_five), ConfirmationRegi
     private lateinit var reference: DatabaseReference
     private var database: FirebaseDatabase = FirebaseDatabase.getInstance()
     private val exercise:MutableList<Exercise> = mutableListOf()
-    val muscle = "biceps"
+    val muscle = listOf("abdominals", "biceps","chest", "glutes", "lower_back", "middle_back", "quadriceps", "triceps")
     val api_key = "YpFI5RlK4EeVml4kF4bXrQ==ltYD4eP4o14u2kSZ"
     interface ApiService {
         @GET("exercises")
@@ -63,7 +64,8 @@ class StepFiveFragment : Fragment(R.layout.fragment_step_five), ConfirmationRegi
 
 
     val apiService = service.create(ApiService::class.java)
-    val call = apiService.getExercises(muscle, StepThreeFragment.StepThreeCompanion.level, api_key)
+    var call: Call<List<Exercise>>? =  null
+    //= apiService.getExercises(muscle, StepThreeFragment.StepThreeCompanion.level, api_key)
 
 
 
@@ -72,20 +74,21 @@ class StepFiveFragment : Fragment(R.layout.fragment_step_five), ConfirmationRegi
 
         _binding = FragmentStepFiveBinding.bind(view)
         val number_exercises = floor((duration * days.size) / 10)
-
+        val number_calls_API = ceil(number_exercises / 3).toInt()
+        for (i in 0..number_calls_API - 1) {
+         call = apiService.getExercises(muscle[i % muscle.size], StepThreeFragment.StepThreeCompanion.level, api_key)
         Log.d("TAG", "Precall")
-        call.enqueue(object : Callback<List<Exercise>> {
+        call!!.enqueue(object : Callback<List<Exercise>> {
             override fun onResponse(call: Call<List<Exercise>>, response: Response<List<Exercise>>) {
                 if (response.isSuccessful) {
 
                     response.body()?.forEach(){
                         Log.d("TAG", "Exercies: $it")
-                        if(StepThreeFragment.StepThreeCompanion.level==it.difficulty){
                             exercise.add(it)
-                        }
 
 
-                    }
+
+        }
                     response.body()
                 } else {
                     println("Error: ${response.code()} ${response.errorBody()?.string()}")
@@ -97,10 +100,7 @@ class StepFiveFragment : Fragment(R.layout.fragment_step_five), ConfirmationRegi
             }
         })
 
-
-
-
-
+        }
 
         binding.btfinish.setOnClickListener{
             if (binding.checkBoxMonday.isChecked()){
@@ -141,15 +141,19 @@ class StepFiveFragment : Fragment(R.layout.fragment_step_five), ConfirmationRegi
                     days, duration)
 
                 viewModel.createUser(user,RegisterFragment.RegisterFragmentCompanion.password)
-                
 
-                val plan: HashMap<String, List<Exercise>> = hashMapOf("Monday" to exercise)
+                val plan: HashMap<String, List<Exercise>> = hashMapOf()
+                val sublistSize = (exercise.size + days.size - 1) / days.size
+                val sublists = exercise.chunked(sublistSize)
+
+                for (i in 0..days.size - 1){
+                    plan.put(days[i], sublists[i])
+                }
+
                 val trainingPlan = TrainingPlan(textNickName, plan)
                 reference = database.getReference("TrainingPlans")
                 Log.d("TAG", "plan: $plan")
                 reference.child(trainingPlan.username).setValue(plan)
-
-
 
             }
         }
