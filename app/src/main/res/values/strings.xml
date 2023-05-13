@@ -23,7 +23,7 @@
     <string name="snackStepOne">Please, write all your data</string>
     <string name="snackStepTwo">Please, mark your gender</string>
     <string name="snackStepFive">Please, finish your schedule</string>
-
+    <string name="snackStepFiveDuration">The duration must be less than 3 hours</string>
 
     <string name="female">Female</string>
     <string name="male">Male</string>
