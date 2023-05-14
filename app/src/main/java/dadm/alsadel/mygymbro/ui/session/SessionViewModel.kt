@@ -6,19 +6,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.database.DataSnapshot
-import dadm.alsadel.mygymbro.data.Exercise
 import dadm.alsadel.mygymbro.data.Session
-import dadm.alsadel.mygymbro.data.auth.AuthRepository
 import dadm.alsadel.mygymbro.data.database.UserRepository
-import dadm.alsadel.mygymbro.domain.model.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.time.DayOfWeek
+import java.time.Duration
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.TextStyle
 import java.util.*
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @HiltViewModel
@@ -59,16 +55,22 @@ class SessionViewModel  @Inject constructor(private val userRepository: UserRepo
         }
     }
 
-    fun createSession(nickname: String, number: String){
+    fun createSession(nickname: String, number: String, initialTime: LocalDateTime){
         viewModelScope.launch {
             val currentDateTime = LocalDateTime.now()
             val dayOfWeek = currentDateTime.dayOfWeek.getDisplayName(TextStyle.FULL, Locale.ENGLISH)
             val formatter = DateTimeFormatter.ofPattern("HH:mm")
             val formattedDateTime = currentDateTime.format(formatter)
+            val duration = getMinutesBetweenDates(initialTime, LocalDateTime.now())
 
-            var session = Session(number, formattedDateTime, dayOfWeek)
+            var session = Session(number, duration, formattedDateTime, dayOfWeek)
             userRepository.addUserSession(nickname, number, session)
         }
+    }
+
+    fun getMinutesBetweenDates(start: LocalDateTime, end: LocalDateTime): Int {
+        val duration: Duration = Duration.between(start, end)
+        return duration.toMinutes().toInt()
     }
 
 }

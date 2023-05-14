@@ -13,10 +13,6 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
-    // TODO: Rename and change types of parameters
-    //private var param1: String? = null
-    //private var param2: String? = null
-
     private var _binding : FragmentProfileBinding? = null
     private val binding get() = _binding!!
     private val loginViewModel : LoginViewModel by viewModels()
@@ -41,6 +37,8 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
         profileViewModel.userInfo.observe(viewLifecycleOwner){user->
             if(user != null){
+                profileViewModel.getUserSessions(user.child("nickname").value.toString())
+
                 binding.tvName.text = user.child("nickname").value.toString()
                 binding.tvEmail.text = user.child("email").value.toString()
                 binding.tvGender.text = user.child("gender").value.toString()
@@ -49,6 +47,14 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 binding.tvAge.text = user.child("age").value.toString()
                 binding.tvSportLevel.text = user.child("level").value.toString()
             }
+        }
+
+        profileViewModel.userTotalSessions.observe(viewLifecycleOwner){totalSessions ->
+            binding.tvTotalSessions.text = totalSessions.toString() + " sessions"
+        }
+
+        profileViewModel.userTotalHours.observe(viewLifecycleOwner){totalHours ->
+            binding.tvHoursSpent.text = totalHours.toString() + " minutes"
         }
     }
 

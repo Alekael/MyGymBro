@@ -64,8 +64,9 @@ class HomeViewModel  @Inject constructor(private val userRepository: UserReposit
         val sessionMap = dataSnapshot.value as? Map<String, Any> ?: return null
         val hour = sessionMap["hour"] as? String
         val day = sessionMap["day"] as? String
+        val totalTime = sessionMap["totalTime"] as? Long
 
-        return Session(dataSnapshot.key, hour, day)
+        return Session(dataSnapshot.key, totalTime!!.toInt(), hour, day)
     }
 
 

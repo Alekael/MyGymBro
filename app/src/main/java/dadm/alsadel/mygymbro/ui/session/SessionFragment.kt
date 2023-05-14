@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import dadm.alsadel.mygymbro.R
 import dadm.alsadel.mygymbro.databinding.FragmentSessionBinding
 import dagger.hilt.android.AndroidEntryPoint
+import java.time.Duration
 import java.time.LocalDateTime
 import java.time.format.TextStyle
 import java.util.*
@@ -32,6 +33,7 @@ class SessionFragment : Fragment(R.layout.fragment_session) {
         val sessionNumber = arguments?.getInt("sessions")?.plus(1)
         val time = arguments?.getInt("time")
         val trainingDays = arguments?.getStringArrayList("trainingDays")
+        val initialTime = LocalDateTime.now()
 
         if (nickname != null && trainingDays != null) {
             val pickedDate = checkDay(trainingDays)
@@ -46,7 +48,6 @@ class SessionFragment : Fragment(R.layout.fragment_session) {
         }
 
         sessionViewModel.actualExercise.observe(viewLifecycleOwner){exercise->
-            Log.i("INFO", "Ejercicio "+ exercise.value)
             val exerciseMap = exercise.value as? Map<String, Any> ?: null
             val number = exercise.key
             val name = exerciseMap!!["name"] as? String
@@ -65,7 +66,7 @@ class SessionFragment : Fragment(R.layout.fragment_session) {
 
         binding.btnFinishSession.setOnClickListener(){
             if (nickname != null && sessionNumber != null){
-                sessionViewModel.createSession(nickname, sessionNumber.toString())
+                sessionViewModel.createSession(nickname, sessionNumber.toString(), initialTime)
             }
             findNavController().navigate(R.id.homeFragment)
         }
