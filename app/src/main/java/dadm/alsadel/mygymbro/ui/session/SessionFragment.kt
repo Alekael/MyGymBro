@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import dadm.alsadel.mygymbro.R
 import dadm.alsadel.mygymbro.databinding.FragmentSessionBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,21 +19,23 @@ class SessionFragment : Fragment(R.layout.fragment_session) {
     private var _binding : FragmentSessionBinding? = null
     private val binding get() = _binding!!
     private val sessionViewModel : SessionViewModel by viewModels()
+    private var timer: CountDownTimer? = null;
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentSessionBinding.bind(view)
 
         val nickname = arguments?.getString("nickname")
-        val totalSessions = arguments?.getInt("sessions")
+        val sessionNumber = arguments?.getInt("sessions")?.plus(1)
         val time = arguments?.getInt("time")
 
         if (nickname != null) {
             sessionViewModel.getUserTrainingPlan(nickname, "Monday")
         }
-        if (totalSessions !=null){
-            binding.tvSessionNumber.text = "Session " + totalSessions.plus(1).toString()
+        if (sessionNumber !=null){
+            binding.tvSessionNumber.text = "Session $sessionNumber"
         }
+
         if (time != null){
             createTimer(time)
         }
@@ -51,9 +54,15 @@ class SessionFragment : Fragment(R.layout.fragment_session) {
             binding.tvExerciseTitle.text = name
             binding.tvReps.text = "" + series + "x" + repetitions + " reps"
         }
-
         binding.btnNextExercise.setOnClickListener(){
             sessionViewModel.nextExercise()
+        }
+
+        binding.btnFinishSession.setOnClickListener(){
+            if (nickname != null && sessionNumber != null){
+                sessionViewModel.createSession(nickname, sessionNumber.toString())
+            }
+            findNavController().navigate(R.id.homeFragment)
         }
     }
 
@@ -66,13 +75,10 @@ class SessionFragment : Fragment(R.layout.fragment_session) {
                 TimeUnit.MINUTES.toMillis(remainingMinutes.toLong()) +
                 TimeUnit.SECONDS.toMillis(seconds.toLong())
 
-        val timer = object : CountDownTimer(totalMillis, 1000) {
+        timer = object : CountDownTimer(totalMillis, 1000) {
             override fun onTick(millisUntilFinished: Long) {
-                // Update the UI with the remaining time
-                // Convert the remaining time to minutes and seconds
                 val remainingMinutes = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)
                 val remainingSeconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished - TimeUnit.MINUTES.toMillis(remainingMinutes))
-                // Format the remaining time as a string and update the UI
                 val remainingTime = String.format("%02d:%02d", remainingMinutes, remainingSeconds)
                 binding.tvRemainingTime.text = remainingTime
             }
@@ -82,11 +88,12 @@ class SessionFragment : Fragment(R.layout.fragment_session) {
             }
         }
 
-        timer.start()
+        timer!!.start()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        timer?.cancel()
         _binding = null
     }
 }
