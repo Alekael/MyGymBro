@@ -25,7 +25,6 @@ class ProfileViewModel @Inject constructor(private val userRepository: UserRepos
 
 
     fun getUserProfile(){
-
         viewModelScope.launch {
 
             userRepository.getUserByEmail(authRepository.currentUser?.email.toString()).get().addOnSuccessListener {user ->

@@ -3,6 +3,7 @@ package dadm.alsadel.mygymbro.data.database
 import com.google.android.gms.tasks.Task
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.Query
+import dadm.alsadel.mygymbro.data.Session
 import dadm.alsadel.mygymbro.domain.model.User
 
 interface UserRepository {
@@ -12,4 +13,10 @@ interface UserRepository {
     suspend fun getUserByNickName(nickName : String) : DatabaseReference
 
     suspend fun getUserByEmail(email : String) : Query
+
+    suspend fun getUserSessionsByNickname(nickname: String): Query
+
+    suspend fun getUserTrainingByNickname(nickname: String, dayOfWeek: String): Query
+
+    suspend fun addUserSession(nickname: String, number: String, session: Session)
 }
