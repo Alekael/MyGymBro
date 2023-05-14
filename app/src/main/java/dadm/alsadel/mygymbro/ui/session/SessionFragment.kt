@@ -10,8 +10,11 @@ import androidx.navigation.fragment.findNavController
 import dadm.alsadel.mygymbro.R
 import dadm.alsadel.mygymbro.databinding.FragmentSessionBinding
 import dagger.hilt.android.AndroidEntryPoint
+import java.time.LocalDateTime
+import java.time.format.TextStyle
 import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.collections.ArrayList
 import kotlin.random.Random
 
 @AndroidEntryPoint
@@ -28,9 +31,11 @@ class SessionFragment : Fragment(R.layout.fragment_session) {
         val nickname = arguments?.getString("nickname")
         val sessionNumber = arguments?.getInt("sessions")?.plus(1)
         val time = arguments?.getInt("time")
+        val trainingDays = arguments?.getStringArrayList("trainingDays")
 
-        if (nickname != null) {
-            sessionViewModel.getUserTrainingPlan(nickname, "Monday")
+        if (nickname != null && trainingDays != null) {
+            val pickedDate = checkDay(trainingDays)
+            sessionViewModel.getUserTrainingPlan(nickname, pickedDate)
         }
         if (sessionNumber !=null){
             binding.tvSessionNumber.text = "Session $sessionNumber"
@@ -89,6 +94,17 @@ class SessionFragment : Fragment(R.layout.fragment_session) {
         }
 
         timer!!.start()
+    }
+
+    fun checkDay(trainingDays: ArrayList<String>): String{
+        val currentDateTime = LocalDateTime.now()
+        val currentDay = currentDateTime.dayOfWeek.getDisplayName(TextStyle.FULL, Locale.ENGLISH)
+
+        return if (trainingDays.contains(currentDay) ){
+            currentDay
+        }else{
+            trainingDays.random()
+        }
     }
 
     override fun onDestroyView() {

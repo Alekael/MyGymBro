@@ -1,6 +1,7 @@
 package dadm.alsadel.mygymbro.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.fragment.app.viewModels
@@ -8,6 +9,8 @@ import androidx.navigation.fragment.findNavController
 import dadm.alsadel.mygymbro.R
 import dadm.alsadel.mygymbro.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
+import java.lang.Integer.parseInt
+import kotlin.reflect.typeOf
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home) {
@@ -33,13 +36,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                         binding.btnStartSession.setOnClickListener(){
                             val bundle = Bundle()
                             val sessionMap = user.value as? Map<String, Any> ?: null
-                            val time = sessionMap!!["time"] as? String
-                            if (time != null) {
-                                bundle.putInt("time", time.toInt())
-                            }
-                            else {
-                                bundle.putInt("time", 60)
-                            }
+                            val time = sessionMap!!["time"] as Long
+                            val trainingDays = sessionMap!!["days"] as ArrayList<String>
+
+                            bundle.putStringArrayList("trainingDays", trainingDays )
+                            bundle.putInt("time", time.toInt())
                             bundle.putString("nickname", user.key)
                             bundle.putInt("sessions", sessions.size)
                             findNavController().navigate(R.id.sessionFragment, bundle)
