@@ -15,13 +15,13 @@
         android:textAlignment="textStart"
         android:textColor="@color/black"
         android:textSize="28sp"
-        app:layout_constraintBottom_toTopOf="@id/title2"
+        app:layout_constraintBottom_toTopOf="@id/tvSessionNumber"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline11" />
 
     <TextView
-        android:id="@+id/title2"
+        android:id="@+id/tvSessionNumber"
         android:layout_width="390dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -53,10 +53,10 @@
         app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title2">
+        app:layout_constraintTop_toBottomOf="@+id/tvSessionNumber">
 
         <TextView
-            android:id="@+id/tvName"
+            android:id="@+id/tvRemainingTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="58:23"
@@ -107,7 +107,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="300dp"
         android:paddingHorizontal="24dp"
         android:layout_marginTop="1dp"
         android:orientation="vertical"
@@ -115,15 +115,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/materialCardView">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:text="Exercises"
-            android:textColor="@color/black"
-            android:textSize="24sp"
-            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -136,17 +127,36 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/tvExerciseNumber"
-                    android:layout_width="50dp"
-                    android:layout_height="match_parent"
+                <androidx.cardview.widget.CardView
+
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
                     android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:backgroundTint="@color/info"
-                    android:gravity="center"
-                    android:text="1"
-                    android:textColor="@color/primary_500"
-                    android:textSize="28sp" />
+                    android:layout_marginRight="16dp"
+                    android:background="@color/secondary_700"
+                    android:backgroundTint="@color/secondary_200"
+                    app:cardElevation="0dp"
+                    android:foregroundGravity="center"
+                    app:cardCornerRadius="5dp">
+
+                    <TextView
+                        android:id="@+id/tvExerciseNumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="1"
+                        android:textAlignment="center"
+                        android:textColor="@color/secondary_700"
+                        android:textSize="24sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.cardview.widget.CardView>
+
+
 
                 <LinearLayout
                     android:layout_width="320dp"
@@ -183,6 +193,7 @@
                 android:id="@+id/tvDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:maxLines="10"
                 android:text="Seat yourself on an incline bench with a dumbbell in each hand. You should pressed firmly against he back with your feet together. Allow the dumbbells to hang straight down at your side, holding them with a neutral grip. This will be your starting position. Initiate the movement by flexing at the elbow, attempting to keep the upper arm stationary. Continue to the top of the movement and pause, then slowly return to the start position."
                 android:textColor="@color/black" />
 
