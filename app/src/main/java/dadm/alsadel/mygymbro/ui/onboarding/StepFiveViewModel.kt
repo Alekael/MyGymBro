@@ -38,6 +38,9 @@ private val authRepository: AuthRepository): ViewModel() {
     val errorVerificationEmail : LiveData<Exception>
         get() = _errorVerificationEmail
 
+    /**
+     * Crea el usuario en Firebase Authentication y también se añade la información del usuario en Realtime Database
+     */
     fun createUser(user : User,password : String){
 
         viewModelScope.launch {
@@ -53,6 +56,10 @@ private val authRepository: AuthRepository): ViewModel() {
                 userRepository.addUser(user)
             }
         }
+
+    /**
+     * Verifica si el usuario es auténtico y existe de verdad
+     */
     fun verifyEmail(){
 
         viewModelScope.launch {

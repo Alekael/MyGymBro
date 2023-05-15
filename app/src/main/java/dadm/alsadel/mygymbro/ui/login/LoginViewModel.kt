@@ -34,6 +34,10 @@ class LoginViewModel @Inject constructor(private val authRepository: AuthReposit
 
         get() = _error
 
+    /**
+     * Hace el login en la aplicación. Antes de eso, se comprueba si ese usuario está verificado
+     * Si no lo está, saltaría una exception
+     */
     fun loginUser(email: String, password : String){
 
         viewModelScope.launch {
@@ -49,6 +53,9 @@ class LoginViewModel @Inject constructor(private val authRepository: AuthReposit
 
     }
 
+    /**
+     * Cierra la sesión del usuario
+     */
     fun logout(){
         authRepository.logout()
         _loginResult.value = null

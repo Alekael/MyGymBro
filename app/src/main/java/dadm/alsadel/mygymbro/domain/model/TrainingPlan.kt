@@ -1,7 +1,5 @@
-package dadm.alsadel.mygymbro.data
+package dadm.alsadel.mygymbro.domain.model
 import com.google.firebase.database.IgnoreExtraProperties
-import org.json.JSONArray
-import org.json.JSONObject
 
 @IgnoreExtraProperties
 data class TrainingPlan(val username:String, val plan:HashMap<String,List<Exercise>>){}

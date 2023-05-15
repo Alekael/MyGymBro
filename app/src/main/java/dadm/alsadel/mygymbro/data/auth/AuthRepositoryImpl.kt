@@ -25,20 +25,33 @@ class AuthRepositoryImpl @Inject constructor(private val firebaseConnection: Fir
        return firebaseConnection.auth.signInWithEmailAndPassword(email,password)
     }
 
+    /**
+     * Registra un usuario que recibe por parámetro el email y contraseña
+     */
     override suspend fun signup(email: String, password: String): Task<AuthResult> {
 
         return firebaseConnection.auth.createUserWithEmailAndPassword(email, password)
     }
 
+    /**
+     * Verifica si el email que llega por parámetro existe en el registro de usuarios de Firebase Authentication
+     */
     override suspend fun verifyUser(email: String) : Task<SignInMethodQueryResult> {
 
         return firebaseConnection.auth.fetchSignInMethodsForEmail(email)
     }
 
+    /**
+     * Verifica si el email está verificado o no en Firebase Authentication
+     * Si no estuviese verificado, la aplicación no dejaría loguear al usuario
+     */
     override suspend fun verifyEmail(): Task<Void> {
         return firebaseConnection.auth.currentUser?.sendEmailVerification() ?: Tasks.forCanceled()
     }
 
+    /**
+     * Cerraría la sesión del usuario, dejando la propiedad currentUser de Firebase Authentication en null
+     */
     override fun logout() {
         firebaseConnection.auth.signOut()
     }

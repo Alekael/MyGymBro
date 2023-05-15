@@ -19,6 +19,10 @@ class StepOneViewModel @Inject constructor(private val userRepository: UserRepos
         get() = _nickNameExist
 
 
+    /**
+     * Se comprueba si el nickname que se quiere introducir existe en la base de datos de Realtime Database o no.
+     * Si existe, entonces mostrará un mensaje de error
+     */
     fun verifyNickName(nickName : String){
 
         viewModelScope.launch {

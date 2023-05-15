@@ -1,4 +1,4 @@
-package dadm.alsadel.mygymbro.data
+package dadm.alsadel.mygymbro.domain.model
 
 data class Exercise(val name:String?,
     val type:String?,

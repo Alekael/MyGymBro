@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.database.DataSnapshot
-import dadm.alsadel.mygymbro.data.Session
+import dadm.alsadel.mygymbro.domain.model.Session
 import dadm.alsadel.mygymbro.data.auth.AuthRepository
 import dadm.alsadel.mygymbro.data.database.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,6 +28,9 @@ class ProfileViewModel @Inject constructor(private val userRepository: UserRepos
     val userTotalHours : MutableLiveData<Float>
         get() = _userTotalHours
 
+    /**
+     * Obtiene toda la información del usuario que está logueado en ese momento
+     */
     fun getUserProfile(){
         viewModelScope.launch {
 
@@ -41,6 +44,9 @@ class ProfileViewModel @Inject constructor(private val userRepository: UserRepos
         }
     }
 
+    /**
+     * Obtiene todas las sesiones realizadas por el usuario logueado en ese momento y actualiza en la parte de progress
+     */
     fun getUserSessions(nickname: String){
         viewModelScope.launch {
             userRepository.getUserSessionsByNickname(nickname).get().addOnSuccessListener {sessions ->
@@ -68,7 +74,10 @@ class ProfileViewModel @Inject constructor(private val userRepository: UserRepos
         }
     }
 
-    fun dataSnapshotToSession(dataSnapshot: DataSnapshot): Session? {
+    /**
+     * Convierte una sesión que es dataSnapshot a un objeto Session
+     */
+    private fun dataSnapshotToSession(dataSnapshot: DataSnapshot): Session? {
         val sessionMap = dataSnapshot.value as? Map<String, Any> ?: return null
         val hour = sessionMap["hour"] as? String
         val day = sessionMap["day"] as? String

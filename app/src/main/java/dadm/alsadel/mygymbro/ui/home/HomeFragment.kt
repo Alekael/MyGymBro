@@ -1,16 +1,14 @@
 package dadm.alsadel.mygymbro.ui.home
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dadm.alsadel.mygymbro.R
 import dadm.alsadel.mygymbro.databinding.FragmentHomeBinding
+import dadm.alsadel.mygymbro.ui.session.SessionListAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import java.lang.Integer.parseInt
-import kotlin.reflect.typeOf
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home) {

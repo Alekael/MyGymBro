@@ -1,5 +1,5 @@
 package dadm.alsadel.mygymbro.data
 
-import org.json.JSONArray
+import dadm.alsadel.mygymbro.domain.model.Exercise
 
 data class ResponseApi(val exercises: List<Exercise>)

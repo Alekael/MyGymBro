@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.database.DataSnapshot
-import dadm.alsadel.mygymbro.data.Session
+import dadm.alsadel.mygymbro.domain.model.Session
 import dadm.alsadel.mygymbro.data.database.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -27,6 +27,9 @@ class SessionViewModel  @Inject constructor(private val userRepository: UserRepo
     val actualExercise : LiveData<DataSnapshot>
         get() = _actualExercise
 
+    /**
+     * Obtiene el plan de entrenamiento del usuario que está logueado
+     */
     fun getUserTrainingPlan(nickname: String, dayOfWeek: String){
         viewModelScope.launch {
             userRepository.getUserTrainingByNickname(nickname, dayOfWeek).get().addOnSuccessListener {trainingPlan ->
@@ -42,6 +45,9 @@ class SessionViewModel  @Inject constructor(private val userRepository: UserRepo
         }
     }
 
+    /**
+     * Obtiene el siguiente ejercicio de la sesión y mostrará en la pantalla
+     */
     fun nextExercise() {
         _trainingPlan.value?.let { plan ->
             val iterator = plan.children.iterator()
@@ -55,6 +61,9 @@ class SessionViewModel  @Inject constructor(private val userRepository: UserRepo
         }
     }
 
+    /**
+     * Crea una nueva sesión y se añade esa sesión a la base de datos
+     */
     fun createSession(nickname: String, number: String, initialTime: LocalDateTime){
         viewModelScope.launch {
             val currentDateTime = LocalDateTime.now()
@@ -68,6 +77,9 @@ class SessionViewModel  @Inject constructor(private val userRepository: UserRepo
         }
     }
 
+    /**
+     * Obtiene los minutos de la sesión que ha realizado el usuario
+     */
     fun getMinutesBetweenDates(start: LocalDateTime, end: LocalDateTime): Int {
         val duration: Duration = Duration.between(start, end)
         return duration.toMinutes().toInt()

@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.database.DataSnapshot
-import dadm.alsadel.mygymbro.data.Session
+import dadm.alsadel.mygymbro.domain.model.Session
 import dadm.alsadel.mygymbro.data.auth.AuthRepository
 import dadm.alsadel.mygymbro.data.database.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,6 +25,9 @@ class HomeViewModel  @Inject constructor(private val userRepository: UserReposit
     val userSessions : MutableLiveData<MutableList<Session>>
         get() = _userSessions
 
+    /**
+     * Obtiene toda la información del usuario que está logueado en ese momento
+     */
     fun getUserInfo(){
         viewModelScope.launch {
             userRepository.getUserByEmail(authRepository.currentUser?.email.toString()).get().addOnSuccessListener {user ->
@@ -32,12 +35,13 @@ class HomeViewModel  @Inject constructor(private val userRepository: UserReposit
                     _userInfo.value = user.children.iterator().next()
 
                 }
-            }.addOnFailureListener {
-                Log.i("ERROR", it.toString())
             }
         }
     }
 
+    /**
+     * Obtiene todas las sesiones realizadas por el usuario logueado
+     */
     fun getUserSessions(nickname: String){
         viewModelScope.launch {
             userRepository.getUserSessionsByNickname(nickname).get().addOnSuccessListener {sessions ->
@@ -55,12 +59,14 @@ class HomeViewModel  @Inject constructor(private val userRepository: UserReposit
                     _userSessions.postValue(sessionsList)
                 }
 
-            }.addOnFailureListener {
-                Log.i("ERROR", it.toString())
             }
         }
     }
-    fun dataSnapshotToSession(dataSnapshot: DataSnapshot): Session? {
+
+    /**
+     * Convierte el objeto DataSnapshot de una sesión al objeto Session
+     */
+    private fun dataSnapshotToSession(dataSnapshot: DataSnapshot): Session? {
         val sessionMap = dataSnapshot.value as? Map<String, Any> ?: return null
         val hour = sessionMap["hour"] as? String
         val day = sessionMap["day"] as? String

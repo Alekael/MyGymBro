@@ -5,36 +5,27 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import dadm.alsadel.mygymbro.R
-import dadm.alsadel.mygymbro.data.Exercise
-import dadm.alsadel.mygymbro.data.ResponseApi
-import dadm.alsadel.mygymbro.data.TrainingPlan
+import dadm.alsadel.mygymbro.domain.model.Exercise
+import dadm.alsadel.mygymbro.domain.model.TrainingPlan
 import dadm.alsadel.mygymbro.databinding.FragmentStepFiveBinding
 import dadm.alsadel.mygymbro.domain.model.User
 import dadm.alsadel.mygymbro.ui.onboarding.StepOneFragment.StepOneCompanion.textNickName
 import dadm.alsadel.mygymbro.ui.register.RegisterFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
-import org.json.JSONArray
-import org.json.JSONObject
 import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Header
-import retrofit2.http.Headers
 import retrofit2.http.Query
 import java.lang.Math.ceil
 import java.lang.Math.floor
-import java.util.concurrent.CountDownLatch
 
 @AndroidEntryPoint
 class StepFiveFragment : Fragment(R.layout.fragment_step_five), ConfirmationRegisterDialog.ConfirmationDialogCallBack {

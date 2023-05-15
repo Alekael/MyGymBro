@@ -1,11 +1,11 @@
-package dadm.alsadel.mygymbro.ui.home
+package dadm.alsadel.mygymbro.ui.session
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import dadm.alsadel.mygymbro.data.Session
+import dadm.alsadel.mygymbro.domain.model.Session
 import dadm.alsadel.mygymbro.databinding.SessionItemBinding
 
 class SessionListAdapter() :

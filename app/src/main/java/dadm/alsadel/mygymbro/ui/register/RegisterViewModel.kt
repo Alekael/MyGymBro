@@ -23,6 +23,10 @@ class RegisterViewModel @Inject constructor(private val authRepository: AuthRepo
     val error : LiveData<Exception>
         get() = _error
 
+    /**
+     * Comprueba si el email que está introduciendo en el input del registro existe en Firebase Authentication
+     * Si no existe, saltará una exception y mostrará un mensaje
+     */
     fun verifySignUp(email : String){
 
         viewModelScope.launch {
